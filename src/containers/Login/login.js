@@ -7,12 +7,10 @@ class Login extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      obj: [],
       username: "",
       alertUsername: false,
       password: "",
       alertPassword: false,
-      validateUser:"Username is incorrect"
       }
     }
     
@@ -40,40 +38,48 @@ class Login extends React.Component {
         username,
         password,
       });
-      return notInvalid;
-      // console.log(validateForm)
-      
+      return notInvalid;      
     };
 
     handleChange = e => {
       this.setState({ [e.target.name]: e.target.value });
     };
 
-    // ErrorValidationLabel = (alertUsername) =>
-    // alertUsername !== true ? (
-    //   {validateUser}
-    //   ) : null;
+    ErrorValidationLabel = (alertUsername, validatePass, notvalid) => {
+      console.log("hello")
+    return alertUsername !== false ? (
+      <div>{notvalid}</div>
+      ) : <div>{validatePass}</div>;
+    }
+
+    ErrorValidationLabel = (alertPassword, validatePass, notvalid) => {
+      console.log("hello")
+    return alertPassword !== false ? (
+      <div>{notvalid}</div>
+      ) : <div>{validatePass}</div>;
+    }
+      
     
     handleSubmit = e => {
       e.preventDefault();
+      console.log(this.state);
     if (this.validateForm()) {
-      const {obj,username,password,alertUsername,alertPassword} =this.state
-      obj.push({
+      const {username,password,alertUsername,alertPassword} =this.state
+      this.state.push({
         username,
         password,
         alertUsername,
         alertPassword
       })
-      // this.setState({
-      //   username: this.username,
-      //   alertUsername: false,
-      //   password: this.password,
-      //   alertPassword: false
-      // })
-      // localStorage.setItem(obj)
+      this.setState({
+        username,
+        password,
+        alertUsername,
+        alertPassword
+      })
+      localStorage.setItem(this.state)
     }
-    console.log(this.state.obj);
-    console.log(e);
+    console.log(this.state.username);
   };
 
   render() {

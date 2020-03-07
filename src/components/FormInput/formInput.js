@@ -22,7 +22,7 @@ const FormInput = (props) => {
             </div>
             <br/>
             <Validation>
-            {/* {ErrorValidationLabel} */}
+            {ErrorValidationLabel(alertUsername, "Username is incorrect", "")}
             </Validation>
             <div className='password'>
               <input 
@@ -36,10 +36,7 @@ const FormInput = (props) => {
             </div>
             <br/>
             <Validation>
-            {/* <ErrorValidationLabel
-            txtLbl="Password is incorrect"
-            alert={alertPassword}
-            /> */}
+              {ErrorValidationLabel(alertPassword, "Password is incorrect", "")}
             </Validation>
             <br/>
             <div className='submit'>
