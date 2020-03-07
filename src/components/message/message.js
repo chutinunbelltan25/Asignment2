@@ -1,28 +1,38 @@
 import React from 'react';
-import { YourMessage, Navber, Footer } from "./message.style";
+import { YourMessage, Navber, Footer, ReplyStopMessage, Space } from "./message.style";
 const Message = (props) => {
-        const { } = props;
+        const { text, message, handleChange, handleSubmit, logout, data, replyMessage} = props;        
     return (
         <div>
             <Navber>
-            <button>Log out</button>
+            <button onClick={logout}>Log out</button>
             </Navber>
-            <YourMessage>
+            {data.length !== 0 && data.map(item => (
+            <YourMessage >
                 <div>
-                <span>gooooo</span>
+                    {item.text}
                 </div>
-                <span>gooooo</span>
             </YourMessage>
-            <Footer>
+            // <ReplyStopMessage >
+            // <div>
+            //     replyMessage( "Stop !! I got it please stop", "")
+            // </div>
+            // </ReplyStopMessage>
+            ))}
+            <Space>
+
+            </Space>
+            <Footer onSubmit={handleSubmit}>
               <input 
               type='text' 
-              name='Message'  
-              noValidate
+              value={text}
+              onChange={handleChange}
               placeholder="Type your message here ..."
               />
-              <button>Send</button>
+              <button onClick={handleSubmit}>Send</button>
           </Footer>
         </div>
     )
 }
 export default Message
+

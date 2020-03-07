@@ -45,39 +45,34 @@ class Login extends React.Component {
       this.setState({ [e.target.name]: e.target.value });
     };
 
-    ErrorValidationLabel = (alertUsername, validatePass, notvalid) => {
-      console.log("hello")
-    return alertUsername !== false ? (
+    ErrorValidationUsername = ( validatePass, notvalid) => {
+    const { alertUsername } = this.state
+    return alertUsername === false ? (
       <div>{notvalid}</div>
       ) : <div>{validatePass}</div>;
     }
 
-    ErrorValidationLabel = (alertPassword, validatePass, notvalid) => {
-      console.log("hello")
-    return alertPassword !== false ? (
+    ErrorValidationPassword = ( validatePass, notvalid) => {
+    const { alertPassword } = this.state
+    return alertPassword === false ? (
       <div>{notvalid}</div>
       ) : <div>{validatePass}</div>;
     }
-      
-    
     handleSubmit = e => {
       e.preventDefault();
-      console.log(this.state);
     if (this.validateForm()) {
       const {username,password,alertUsername,alertPassword} =this.state
-      this.state.push({
-        username,
-        password,
-        alertUsername,
-        alertPassword
-      })
       this.setState({
         username,
         password,
         alertUsername,
         alertPassword
       })
-      localStorage.setItem(this.state)
+
+      localStorage.setItem(
+        'login',this.state
+        )
+      this.props.history.push("/MessagePage")
     }
     console.log(this.state.username);
   };
@@ -91,7 +86,8 @@ class Login extends React.Component {
           handleSubmit={this.handleSubmit}
           username={this.state.username}
           password={this.state.password}
-          ErrorValidationLabel={this.ErrorValidationLabel}
+          ErrorValidationUsername={this.ErrorValidationUsername}
+          ErrorValidationPassword={this.ErrorValidationPassword}
           />    
         
       </div>

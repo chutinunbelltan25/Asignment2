@@ -1,7 +1,7 @@
 import React from 'react';
 import { Style, Validation } from "./formInput.style";
 const FormInput = (props) => {
-        const {  handleSubmit, handleChange, username, password, alertUsername, alertPassword, ErrorValidationLabel} = props;
+        const {  handleSubmit, handleChange, username, password, ErrorValidationUsername, ErrorValidationPassword} = props;
         
     return (
         <Style>
@@ -22,7 +22,7 @@ const FormInput = (props) => {
             </div>
             <br/>
             <Validation>
-            {ErrorValidationLabel(alertUsername, "Username is incorrect", "")}
+            {ErrorValidationUsername( "Username is incorrect", "")}
             </Validation>
             <div className='password'>
               <input 
@@ -36,7 +36,7 @@ const FormInput = (props) => {
             </div>
             <br/>
             <Validation>
-              {ErrorValidationLabel(alertPassword, "Password is incorrect", "")}
+              {ErrorValidationPassword("Password is incorrect", "")}
             </Validation>
             <br/>
             <div className='submit'>

@@ -1,11 +1,35 @@
 import styled from "styled-components";
 
 export const YourMessage = styled.div `
-    display:flex;
+    display: grid;
+    justify-items: center;
     background-color: #ff9999;
     border-radius: 5px;
-    padding: 10px;
-    position: fixed;
+    padding: 30px;
+    position: unset;
+    bottom: 10px;
+    margin-left: 700px;
+    margin-right: 20px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    right: 40px;
+    bottom: 70px;
+    span {
+        display:block;
+    }
+`
+export const ReplyStopMessage = styled.div `
+    display: grid;
+    justify-items: center;
+    background-color: #93E2D5;
+    border-radius: 5px;
+    padding: 30px;
+    position: unset;
+    bottom: 10px;
+    margin-left: 700px;
+    margin-right: 20px;
+    margin-top: 25px;
+    margin-bottom: 25px;
     right: 40px;
     bottom: 70px;
     span {
@@ -29,6 +53,12 @@ export const Navber = styled.div `
         margin: 9px;
     }
 `
+export const Space = styled.div `
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+`
+
 export const Footer = styled.div `
     display: grid;
     grid-template-columns: 80% 20% ; 
