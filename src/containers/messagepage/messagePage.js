@@ -1,5 +1,6 @@
 import React from "react";
 import { Message } from "../../components";
+import { ReplyStopMessage } from './massagePage.style'
 import moment from 'moment'
 class MessagePage extends React.Component {
   constructor(props) {
@@ -7,7 +8,8 @@ class MessagePage extends React.Component {
     this.state = {
       message: [],
       text: "",
-      stop: false,
+      notStop: '',
+      stop: '',
       time: moment().format('LT')
     };
   }
@@ -25,34 +27,35 @@ class MessagePage extends React.Component {
   };
 
   handleSubmit = e => {
-    const { text, message, stop } = this.state;
+    const { text, message, stop, notStop } = this.state;
     message.push({
       text: text,
       stop: stop,
+      notStop: notStop,
       time: moment().format('LT')
     });
-    if (message.length > 20) {
-      alert()
+    if (message.length > 19) {
+        this.setState({
+          message: message,
+          text: "",
+          stop: 'Stop !! I got it please stop',
+          notStop: notStop,
+          time: moment().format('LT')
+        });
+        localStorage.setItem('text',JSON.stringify(this.state.message))
     }
     else {
       this.setState({
         message: message,
         text: "",
-        stop: false,
+        stop: '',
+        notStop: notStop,
         time: moment().format('LT')
       });
       localStorage.setItem("text", JSON.stringify(this.state.message));
       console.log(this.state.message);
     }
   };
-
-  // replyMessage = () => {
-  //     const { stop } =this.state
-  //     (stop === true
-  //     ) ? (
-  //     <div>{stopMessage}</div>
-  //     ) : <div>{notstopMessage}</div>
-  // }
 
   logout = e => {
     localStorage.clear();

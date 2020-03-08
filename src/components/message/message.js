@@ -1,5 +1,5 @@
 import React from 'react';
-import { YourMessage, Navber, Footer, ReplyStopMessage, Space, Time } from "./message.style";
+import { YourMessage, Navber, Footer, ReplyStopMessage, Space, Time, TimeReply } from "./message.style";
 const Message = (props) => {
         const { text, message, handleChange, handleSubmit, logout, replyMessage} = props;        
     return (
@@ -15,13 +15,17 @@ const Message = (props) => {
                 </div>
             </YourMessage>
             <Time>{item.time}</Time>
-            {/* <ReplyStopMessage >
-            <div>
-                asas{/* replyMessage( "Stop !! I got it please stop", "") */}
-            {/* </div> */}
-            {/* </ReplyStopMessage> */}
-            </div>
+            </div> 
             ))}
+            {message.map(item => {
+            if (item.stop !== ""){
+            return (
+            <div>
+            <ReplyStopMessage>{item.stop} </ReplyStopMessage>
+            <TimeReply>{item.time}</TimeReply>
+            </div>
+            )}
+            })}
             <Space>
             </Space>
             <Footer onSubmit={handleSubmit}>

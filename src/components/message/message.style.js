@@ -25,6 +25,13 @@ export const Time = styled.div `
     font-size: smaller;
 `
 
+
+export const TimeReply = styled.div `
+    display: grid;
+    margin-left: 20px;
+    font-size: smaller;
+`
+
 export const ReplyStopMessage = styled.div `
     display: grid;
     justify-items: center;
