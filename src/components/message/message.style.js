@@ -18,6 +18,13 @@ export const YourMessage = styled.div `
         display:block;
     }
 `
+export const Time = styled.div `
+    display: grid;
+    justify-items: flex-end;
+    margin-right: 20px;
+    font-size: smaller;
+`
+
 export const ReplyStopMessage = styled.div `
     display: grid;
     justify-items: center;
@@ -26,8 +33,8 @@ export const ReplyStopMessage = styled.div `
     padding: 30px;
     position: unset;
     bottom: 10px;
-    margin-left: 700px;
-    margin-right: 20px;
+    margin-left: 20px;
+    margin-right: 700px;
     margin-top: 25px;
     margin-bottom: 25px;
     right: 40px;
@@ -55,7 +62,7 @@ export const Navber = styled.div `
 `
 export const Space = styled.div `
     width: 100%;
-    height: 40px;
+    height: 10vh;
     background-color: transparent;
 `
 

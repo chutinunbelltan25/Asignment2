@@ -1,26 +1,28 @@
 import React from 'react';
-import { YourMessage, Navber, Footer, ReplyStopMessage, Space } from "./message.style";
+import { YourMessage, Navber, Footer, ReplyStopMessage, Space, Time } from "./message.style";
 const Message = (props) => {
-        const { text, message, handleChange, handleSubmit, logout, data, replyMessage} = props;        
+        const { text, message, handleChange, handleSubmit, logout, replyMessage} = props;        
     return (
         <div>
             <Navber>
             <button onClick={logout}>Log out</button>
             </Navber>
-            {data.length !== 0 && data.map(item => (
-            <YourMessage >
+            {message.length !== 0 && message.map((item, index) => (
+            <div>
+            <YourMessage key={index} > 
                 <div>
                     {item.text}
                 </div>
             </YourMessage>
-            // <ReplyStopMessage >
-            // <div>
-            //     replyMessage( "Stop !! I got it please stop", "")
-            // </div>
-            // </ReplyStopMessage>
+            <Time>{item.time}</Time>
+            {/* <ReplyStopMessage >
+            <div>
+                asas{/* replyMessage( "Stop !! I got it please stop", "") */}
+            {/* </div> */}
+            {/* </ReplyStopMessage> */}
+            </div>
             ))}
             <Space>
-
             </Space>
             <Footer onSubmit={handleSubmit}>
               <input 

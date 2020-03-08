@@ -1,64 +1,76 @@
-import React from 'react';
+import React from "react";
 import { Message } from "../../components";
-
+import moment from 'moment'
 class MessagePage extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-          message: [],
-          text: '',
-        }
-      }
+  constructor(props) {
+    super(props);
+    this.state = {
+      message: [],
+      text: "",
+      stop: false,
+      time: moment().format('LT')
+    };
+  }
 
-    handleChange = e => {
-        this.setState({
-          text: e.target.value
-        })
-        console.log(e.target.value);
+  componentDidMount() {
+    const message = JSON.parse(localStorage.getItem("text")) || []
+    this.setState({ message });
+  }
+
+  handleChange = e => {
+    this.setState({
+      text: e.target.value
+    });
+    console.log(e.target.value);
+  };
+
+  handleSubmit = e => {
+    const { text, message, stop } = this.state;
+    message.push({
+      text: text,
+      stop: stop,
+      time: moment().format('LT')
+    });
+    if (message.length > 20) {
+      alert()
     }
-    handleSubmit = e => {
-        const { text, message } = this.state
-        message.push({
-            text: text
-          })
-        this.setState({
-            message: message,
-            text: ''
-        })
-        localStorage.setItem("text", JSON.stringify(this.state.message))
-        console.log(this.state);
-        const data = JSON.parse(localStorage.getItem("text")) 
-        console.log(data);
-
-      }
-
-    // replyMessage = (stopMessage, notstopMessage) => {
-    //     const { message } =this.state
-    //     message.length(
-    //         item => item.text > 21
-    //     ) ? (
-    //     <div>{stopMessage}</div>
-    //     ) : <div>{notstopMessage}</div>
-    // }
-
-    logout = e => {
-        localStorage.clear()
-        this.props.history.push("/login")
+    else {
+      this.setState({
+        message: message,
+        text: "",
+        stop: false,
+        time: moment().format('LT')
+      });
+      localStorage.setItem("text", JSON.stringify(this.state.message));
+      console.log(this.state.message);
     }
-    render() {
-        return (
-          <div>
-              <Message 
-              text={this.state.text}
-              message={this.state.message}
-              data={this.data}
-              logout={this.logout}
-              handleChange={this.handleChange}
-              handleSubmit={this.handleSubmit}
-              replyMessage={this.replyMessage}
-              />
-          </div>
-        )
-      }
-    }
-    export default MessagePage
+  };
+
+  // replyMessage = () => {
+  //     const { stop } =this.state
+  //     (stop === true
+  //     ) ? (
+  //     <div>{stopMessage}</div>
+  //     ) : <div>{notstopMessage}</div>
+  // }
+
+  logout = e => {
+    localStorage.clear();
+    this.props.history.push("/login");
+  };
+  render() {
+    return (
+      <div>
+        <Message
+          text={this.state.text}
+          message={this.state.message}
+          logout={this.logout}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+          replyMessage={this.replyMessage}
+        />
+      </div>
+    );
+  }
+}
+export default MessagePage;
