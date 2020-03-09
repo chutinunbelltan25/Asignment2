@@ -18,6 +18,7 @@ export const YourMessage = styled.div `
         display:block;
     }
 `
+
 export const Time = styled.div `
     display: grid;
     justify-items: flex-end;
@@ -54,8 +55,10 @@ export const ReplyStopMessage = styled.div `
 export const Navber = styled.div `
     display: grid;
     justify-items: flex-start;
+    position: absolute;
     width: 100%;
     height: 8vh;
+    overflow:hidden;
     background-color: #93E2D5;
 
     button { 
@@ -67,19 +70,22 @@ export const Navber = styled.div `
         margin: 9px;
     }
 `
-export const Space = styled.div `
+export const Chat = styled.div `
+    height: 80%;
     width: 100%;
-    height: 10vh;
-    background-color: transparent;
+    position: absolute;
+    overflow: auto;
+    top:60px; 
+
 `
 
 export const Footer = styled.div `
     display: grid;
     grid-template-columns: 80% 20% ; 
-    position: fixed;
-    left: 0;
+    position: absolute;
     bottom: 0;
     width: 100%;
+    overflow:hidden;
     background-color: silver;
 
     input {

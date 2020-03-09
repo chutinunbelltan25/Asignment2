@@ -1,33 +1,31 @@
 import React from 'react';
-import { YourMessage, Navber, Footer, ReplyStopMessage, Space, Time, TimeReply } from "./message.style";
+import { YourMessage, Navber, Footer, Chat, ReplyStopMessage, Time, TimeReply } from "./message.style";
 const Message = (props) => {
-        const { text, message, handleChange, handleSubmit, logout, replyMessage} = props;        
+        const { text, message, handleChange, handleSubmit, logout, scrollWin } = props;        
     return (
         <div>
             <Navber>
             <button onClick={logout}>Log out</button>
             </Navber>
+            <Chat onChange={scrollWin}>
             {message.length !== 0 && message.map((item, index) => (
-            <div>
+            <ul>
             <YourMessage key={index} > 
-                <div>
                     {item.text}
-                </div>
             </YourMessage>
             <Time>{item.time}</Time>
-            </div> 
+            </ul> 
             ))}
             {message.map(item => {
             if (item.stop !== ""){
             return (
-            <div>
-            <ReplyStopMessage>{item.stop} </ReplyStopMessage>
+            <ul>
+            <ReplyStopMessage>{item.stop}</ReplyStopMessage>
             <TimeReply>{item.time}</TimeReply>
-            </div>
+            </ul>
             )}
             })}
-            <Space>
-            </Space>
+            </Chat>
             <Footer onSubmit={handleSubmit}>
               <input 
               type='text' 
@@ -35,8 +33,9 @@ const Message = (props) => {
               onChange={handleChange}
               placeholder="Type your message here ..."
               />
-              <button onClick={handleSubmit}>Send</button>
+              <button onClick={handleSubmit} >Send</button>
           </Footer>
+          
         </div>
     )
 }

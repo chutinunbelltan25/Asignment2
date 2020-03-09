@@ -1,26 +1,31 @@
 import React from 'react';
 import { Style, Validation } from "./formInput.style";
 const FormInput = (props) => {
-        const {  handleSubmit, handleChange, username, password, ErrorValidationUsername, ErrorValidationPassword} = props;
-        
+        const {  handleSubmit,
+                 handleChange,
+                 username,
+                 password,
+                 alertUsername, 
+                 ErrorValidationUsername, 
+                 ErrorValidationPassword}
+                 = props;        
     return (
-        <Style>
+        <Style  
+        validation={alertUsername}
+        >
             <br/>
             <form 
             onSubmit={handleSubmit}
             noValidate
             >
-            <div className='user-name'>
               <input 
               type='text' 
               value={username}
               onChange={handleChange}
               name="username"
-              placeholder="Username"
+              placeholder=" Username"
               required
               />
-            </div>
-            <br/>
             <Validation>
             {ErrorValidationUsername( "Username is incorrect", "")}
             </Validation>
@@ -31,14 +36,12 @@ const FormInput = (props) => {
               onChange={handleChange}
               type="password"
               name="password"
-              placeholder="Password"
+              placeholder=" Password"
                />
             </div>
-            <br/>
             <Validation>
               {ErrorValidationPassword("Password is incorrect", "")}
             </Validation>
-            <br/>
             <div className='submit'>
               <button onClick={handleSubmit}>Login</button>
             </div>

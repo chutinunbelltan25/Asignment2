@@ -1,5 +1,4 @@
 import React from 'react';
-import { Validation } from "./login.style";
 import { FormInput, Message } from "../../components";
 
 
@@ -72,9 +71,10 @@ class Login extends React.Component {
       localStorage.setItem(
         'login',this.state
         )
-      this.props.history.push("/MessagePage")
+        if (localStorage.getItem("login") === this.props.history.push("/MessagePage")){
+          this.props.history.push("/login")
+        }
     }
-    console.log(this.state.username);
   };
 
   render() {
@@ -86,6 +86,7 @@ class Login extends React.Component {
           handleSubmit={this.handleSubmit}
           username={this.state.username}
           password={this.state.password}
+          alertUsername={this.state.alertUsername}
           ErrorValidationUsername={this.ErrorValidationUsername}
           ErrorValidationPassword={this.ErrorValidationPassword}
           />    

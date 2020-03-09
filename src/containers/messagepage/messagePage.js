@@ -1,6 +1,6 @@
 import React from "react";
 import { Message } from "../../components";
-import { ReplyStopMessage } from './massagePage.style'
+import { Redirect } from 'react-router-dom'
 import moment from 'moment'
 class MessagePage extends React.Component {
   constructor(props) {
@@ -19,6 +19,9 @@ class MessagePage extends React.Component {
     this.setState({ message });
   }
 
+  scrollWin = () => {
+    scrollIntoView(0, 500);
+  }
   handleChange = e => {
     this.setState({
       text: e.target.value
@@ -62,7 +65,8 @@ class MessagePage extends React.Component {
     this.props.history.push("/login");
   };
   render() {
-    return (
+    if (!!localStorage.getItem("login"))
+    return ( 
       <div>
         <Message
           text={this.state.text}
@@ -71,9 +75,14 @@ class MessagePage extends React.Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
           replyMessage={this.replyMessage}
+          scrollWin={this.scrollWin}
         />
       </div>
-    );
+    )
+    else 
+    return (  
+    <Redirect to="/login"/>
+    )
   }
 }
 export default MessagePage;
