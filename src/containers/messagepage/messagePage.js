@@ -19,9 +19,7 @@ class MessagePage extends React.Component {
     this.setState({ message });
   }
 
-  scrollWin = () => {
-    scrollIntoView(0, 500);
-  }
+  
   handleChange = e => {
     this.setState({
       text: e.target.value

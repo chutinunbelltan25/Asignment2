@@ -7,7 +7,7 @@ const Message = (props) => {
             <Navber>
             <button onClick={logout}>Log out</button>
             </Navber>
-            <Chat onChange={scrollWin}>
+            <Chat >
             {message.length !== 0 && message.map((item, index) => (
             <ul>
             <YourMessage key={index} > 
