@@ -1,30 +1,45 @@
-import React from 'react';
-import { YourMessage, Navber, Footer, Chat, ReplyStopMessage, Time, TimeReply } from "./message.style";
+import React, {useRef, useEffect} from 'react';
+import { TiDeleteOutline } from "react-icons/ti";
+
+import { YourMessage, Navber, Footer, Chat, Icon, ReplyStopMessage, Time, TimeReply } from "./message.style";
 const Message = (props) => {
-        const { text, message, handleChange, handleSubmit, logout, scrollWin } = props;        
+        const { text, message, handleChange, handleSubmit, backToFriend, showDelete, display } = props;        
+        const messagesEndRef = useRef(null)
+        const scrollToBottom = () => {
+            return messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+          }
+          useEffect(scrollToBottom);
+          console.log(display);
+          
     return (
         <div>
             <Navber>
-            <button onClick={logout}>Log out</button>
+            <button onClick={backToFriend}>Back</button>
             </Navber>
             <Chat >
             {message.length !== 0 && message.map((item, index) => (
-            <ul>
-            <YourMessage key={index} > 
-                    {item.text}
+            <div >
+            <div onClick={showDelete}>
+            <Icon style = {{display : display }}>
+            <TiDeleteOutline />
+            </Icon>
+            <YourMessage key={index} >
+              {item.text}
             </YourMessage>
+            </div>
             <Time>{item.time}</Time>
-            </ul> 
+            </div> 
             ))}
             {message.map(item => {
             if (item.stop !== ""){
             return (
-            <ul>
+            <div>
             <ReplyStopMessage>{item.stop}</ReplyStopMessage>
             <TimeReply>{item.time}</TimeReply>
-            </ul>
+            </div>
             )}
             })}
+            <div ref={messagesEndRef}/>
             </Chat>
             <Footer onSubmit={handleSubmit}>
               <input 
@@ -40,4 +55,3 @@ const Message = (props) => {
     )
 }
 export default Message
-

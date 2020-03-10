@@ -1,5 +1,6 @@
 import React from 'react';
-import { FormInput, Message } from "../../components";
+import { FormInput } from "../../components";
+import { Redirect } from 'react-router-dom';
 
 
 class Login extends React.Component {
@@ -78,9 +79,12 @@ class Login extends React.Component {
   };
 
   render() {
-
+    const token = localStorage.getItem('login')
     return (
       <div>
+        {
+          token && <Redirect to="/MessagePage"/>
+        }
           <FormInput
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}

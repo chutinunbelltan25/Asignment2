@@ -1,39 +1,47 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-export const YourMessage = styled.div `
+export const Frienddiv = styled.div `
+
+`
+export const Friendlist = styled.tr `
     display: grid;
-    justify-items: center;
-    background-color: #ff9999;
-    border-radius: 5px;
-    padding: 30px;
-    position: relative;
-    bottom: 10px;
-    margin-left: 700px;
-    margin-right: 20px;
-    margin-top: 25px;
-    margin-bottom: 25px;
-    right: 40px;
+    justify-items: start;
+    grid-template-columns: 20% 60% 20%;
+    background-color: #f0f0f1;
+    border-color: silver;
+    border-style: solid;
+    border-width: 1px;
+    width: 100%;
+    height: 120px;
     span {
         display:block;
     }
+    button {
+        width: 100px;
+        height: 40px;
+        margin: 40px 10px;
+        background-color: #ff9999;
+        border-radius: 5px;
+    }
 `
+export const Detail = styled.td `
 
-export const Icon = styled.div `
-    background-color: silver;
-    border-radius: 50px;
-    width: 15px;
-    height: 15px;
-    position: relative;
-    left: 870px;
-    top: 22px;
-    z-index: 1;
+    img {
+        width: 100px;
+        height: 100px;
+        object-fit: none;
+        object-position: 10% 35%;
+        margin: 10px 20px;
+}
+
+
 `
 
 export const Time = styled.div `
     display: grid;
     justify-items: flex-end;
     margin-right: 20px;
-    font-size: smaller;
+    font-size: medium;
 `
 
 
@@ -64,7 +72,7 @@ export const ReplyStopMessage = styled.div `
 
 export const Navber = styled.div `
     display: grid;
-    justify-items: flex-start;
+    justify-items: flex-end;
     position: absolute;
     width: 100%;
     height: 8vh;
@@ -72,16 +80,16 @@ export const Navber = styled.div `
     background-color: #93E2D5;
 
     button { 
-        background-color: #ff9999;
+        background-color: #2a9df4;
         border-radius: 5px;
-        width: 60px;
+        width: 120px;
         height: 40px;
         color: white;
         margin: 9px;
     }
 `
-export const Chat = styled.div `
-    height: 80%;
+export const Myfriend = styled.table `
+    height: 90%;
     width: 100%;
     position: absolute;
     overflow: auto;
@@ -91,24 +99,20 @@ export const Chat = styled.div `
 
 export const Footer = styled.div `
     display: grid;
-    grid-template-columns: 80% 20% ; 
+    grid-template-columns: 10% 900% ; 
     position: absolute;
     bottom: 0;
+    height: 6vh;
     width: 100%;
     overflow:hidden;
-    background-color: silver;
+    background-color: #93E2D5;
 
-    input {
-        margin: 5px 10px;
-        height: 30px;
-        font-size: 20px;
-        border-radius: 5px;
-
-    }
     button {
-        margin: 5px 8px;
+        margin-top: 5px;
+        margin-left: 10px;
+        margin-bottom: 5px;
         color: white;
-        background-color: #93E2D5;
+        background-color: #ff9999;
         font-size: 15px;
         border-radius: 5px;
 

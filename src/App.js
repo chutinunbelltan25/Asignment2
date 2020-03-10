@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Login, MessagePage } from './containers/index'
+import { Login, MessagePage, Friend } from './containers/index'
 import {
   Route,
   BrowserRouter,
@@ -12,6 +12,7 @@ function App() {
       <BrowserRouter>
       <Route path="/login" component={Login} />
       <Route path="/MessagePage" component={MessagePage} />
+      <Route path="/Friend" component={Friend} />
       </BrowserRouter>
     </div>
   );
