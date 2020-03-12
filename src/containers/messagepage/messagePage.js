@@ -39,9 +39,9 @@ class MessagePage extends React.Component {
     message.map( (item,index2) => index == index2 ?  
     this.setState({ 
       message: message,
-      text: text,
+      text: 'Your message was deleted',
       stop: stop,
-      change: change,
+      change: true,
       time: moment().format('LT'),
       display : "block" 
     })
