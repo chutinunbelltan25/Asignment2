@@ -16,9 +16,9 @@ const Message = (props) => {
             <button onClick={backToFriend}>Back</button>
             </Navber>
             <Chat >
-            {message.length !== 0 && message.map((item) => (
+            {message.length !== 0 && message.map((item,index) => (
             <div >
-            <div onClick={showDelete}>
+            <div onClick={()=> showDelete(item,index)}>
             <Icon style = {{display : display }}>
             <TiDeleteOutline />
             </Icon>

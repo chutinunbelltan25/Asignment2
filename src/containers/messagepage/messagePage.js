@@ -33,9 +33,10 @@ class MessagePage extends React.Component {
     console.log(message);
     
   }
-  showDelete = () => {
+  showDelete = (item,index) => {
     const { text, message, stop, change, display  } = this.state
-    display === "none" ? 
+    console.log(this.state);
+    message.map( (item,index2) => index == index2 ?  
     this.setState({ 
       message: message,
       text: text,
@@ -43,7 +44,8 @@ class MessagePage extends React.Component {
       change: change,
       time: moment().format('LT'),
       display : "block" 
-    }) : 
+    })
+     : 
     this.setState({ 
       message: message,
       text: text,
@@ -51,7 +53,9 @@ class MessagePage extends React.Component {
       change: change,
       time: moment().format('LT'),
       display: "none"
-    })
+    }) 
+    )
+    console.log(this.state)
     }
   
   handleChange = e => {
@@ -72,20 +76,18 @@ class MessagePage extends React.Component {
       time: moment().format('LT')
     });
     const friendStatus = JSON.parse(localStorage.getItem("message"));
-    // friendStatus.map(item => { 
-    //   if(item.id === targetId){
-    //   status: 'Last message at  ' + moment().format('l'),
-    //   return newElement
-    //   }else{
-    //   return item
-    //   }
-    //   })
+    // friendStatus.map(item => {if(item.id === id) {
+    //   let updateItem = {...item, stastus: 'Last message at  ' + moment().format('l')}
+    //   console.log(updateItem);
+    //   return  
+    // } else {
+    //  return item
+    // }})
+      
+      
     console.log(friendStatus);
-    
-    localStorage.setItem('friend',JSON.stringify(this.state.friendUpdated))
-    
+    // localStorage.setItem('friend',JSON.stringify(this.state.friendUpdated))
   }
-    
     if (message.length > 18) {
         this.setState({
           message: message,
@@ -110,13 +112,11 @@ class MessagePage extends React.Component {
       console.log(this.state.message);
     }
   };
-  // deleteMessage = e => {
-  //   const {message} = this.state
-  //     message.map(item => (item.id 
-  //     )
-  //     console.log(item);
+  deleteMessage = e => {
+    const {message} = this.state
+      message.map()
       
-  // }
+  }
 
   backToFriend = e => {
     this.props.history.push("/Friend");
