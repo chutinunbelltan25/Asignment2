@@ -24,7 +24,7 @@ export const Icon = styled.div `
     width: 15px;
     height: 15px;
     position: relative;
-    left: 870px;
+    left: 90%;
     top: 22px;
     z-index: 1;
 `
@@ -32,7 +32,7 @@ export const Icon = styled.div `
 export const Time = styled.div `
     display: grid;
     justify-items: flex-end;
-    margin-right: 20px;
+    margin-right: 60px;
     font-size: smaller;
 `
 
@@ -72,11 +72,11 @@ export const Navber = styled.div `
     background-color: #93E2D5;
 
     button { 
-        background-color: #ff9999;
+        background-color: silver;
         border-radius: 5px;
-        width: 60px;
+        width: 80px;
         height: 40px;
-        color: white;
+        color: black;
         margin: 9px;
     }
 `

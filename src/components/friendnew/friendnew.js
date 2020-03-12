@@ -1,34 +1,46 @@
 import React from 'react'
-import { Friendlist, Navber, Footer, Myfriend, Time, Detail } from "./friendnew.style";
+import { Friendlist, Navber, Footer, Myfriend, Time, Detail, Buttonback, ButtonSearch } from "./friendnew.style";
 
 const FriendNew = (props) => {
-    const { logout } = props;
+    const { logout, showSearch, display, friendFind, backToMessage, friendList, messageto, deleteFriend, inputsearch, name } = props;
+    // console.log(name);
+    
     return (
         <div>
             <Navber>
-            <button>Search Friend</button>
+                <div><Buttonback onClick={backToMessage}>back</Buttonback></div>
+                <div></div>
+                <div >
+                <input 
+                style = {{display : display }}
+                type='text'
+                name='name'
+                value={name}
+                onChange={inputsearch}
+                />
+                </div>
+                <div>
+                <ButtonSearch onClick={showSearch}>Search Friend</ButtonSearch>
+                </div>
+
             </Navber>
             <Myfriend >
-            <Friendlist > 
+            {friendList.map((item) => ( 
+            <Friendlist key={item.id}> 
             <Detail>
-                <img src='https://images2.minutemediacdn.com/image/upload/c_fill,g_auto,h_1248,w_2220/f_auto,q_auto,w_1100/v1555925520/shape/mentalfloss/800px-princesslineup.jpg' alt='' />
+                <img 
+                src={item.photo} 
+                onClick={()=>messageto(item.id)}
+                alt='' 
+                />
             </Detail>
             <div>
-                <h1>JOM</h1>
-                <Time>status Time</Time>
+                <h1>{item.name}</h1>
+            <Time>{item.status}</Time>
             </div>
-            <button>Delete</button>
+            <button onClick={()=>deleteFriend(item.id)}>Delete</button>
             </Friendlist>
-            <Friendlist > 
-            <Detail>
-                <img src='https://images2.minutemediacdn.com/image/upload/c_fill,g_auto,h_1248,w_2220/f_auto,q_auto,w_1100/v1555925520/shape/mentalfloss/800px-princesslineup.jpg' alt='' />
-            </Detail>
-            <div>
-                <h1>JOM</h1>
-                <Time>status Time</Time>
-            </div>
-            <button>Delete</button>
-            </Friendlist>
+            ))}
             </Myfriend>
             <Footer >
             <button onClick={logout}>Log out</button>

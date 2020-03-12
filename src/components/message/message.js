@@ -9,7 +9,6 @@ const Message = (props) => {
             return messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
           }
           useEffect(scrollToBottom);
-          console.log(display);
           
     return (
         <div>
@@ -17,13 +16,13 @@ const Message = (props) => {
             <button onClick={backToFriend}>Back</button>
             </Navber>
             <Chat >
-            {message.length !== 0 && message.map((item, index) => (
+            {message.length !== 0 && message.map((item) => (
             <div >
             <div onClick={showDelete}>
             <Icon style = {{display : display }}>
             <TiDeleteOutline />
             </Icon>
-            <YourMessage key={index} >
+            <YourMessage  >
               {item.text}
             </YourMessage>
             </div>

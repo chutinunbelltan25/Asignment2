@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormInput } from "../../components";
 import { Redirect } from 'react-router-dom';
+import moment from 'moment'
 
 
 class Login extends React.Component {
@@ -11,6 +12,66 @@ class Login extends React.Component {
       alertUsername: false,
       password: "",
       alertPassword: false,
+      friendList: [
+        {
+          id: "a0b1-c2d3-e4f5",
+          name: "Alice",
+          photo: 'https://i.pinimg.com/originals/26/94/92/2694922c532a25e46e7125c62caf9c1f.jpg',
+          status: 'Last message at  ' + moment().format('l'),
+        },
+        {
+          id: "a4b5-c6d7-e8f9",
+          name: "Bob",
+          photo: 'https://i.pinimg.com/originals/9a/a8/ca/9aa8ca30c2b4b225702a5c580374dd98.jpg',
+          status: 'Last message at  ' + moment().format('l'),
+          
+        },
+        {
+          id: "a9b0-c1d2-e3f4",
+          name: "Carter",
+          photo: 'https://i.pinimg.com/originals/17/6c/57/176c57ed3f305ec6ffd91b5b199b9927.png',
+          status: "Your friends is accepted",
+          message: [],
+        }
+      ],
+      message: [
+        {
+          id: "m0n1-o2p3-q4r5",
+          owner_id: "a0b1-c2d3-e4f5",
+          text: "Hi :D",
+          change: false,
+          stop: '',
+          display: 'none',
+          time: '12.00 PM'
+        },
+        {
+          id: "m0n1-o2p3-q4r5",
+          owner_id: "a0b1-c2d3-e4f5",
+          text: "Hi Alice, I'm Bell",
+          change: false,
+          stop: '',
+          display: 'none',
+          time: moment().format('LT')
+        },
+        {
+          id: "m0n1-o2p3-q4r5",
+          owner_id: "a4b5-c6d7-e8f9",
+          text: "Hi Bob, I'm belle",
+          change: false,
+          stop: '',
+          display: 'none',
+          time: moment().format('LT')
+        },{
+          id: "m0n1-o2p3-q4r5",
+          owner_id: "a4b5-c6d7-e8f9",
+          text: "How are you",
+          change: false,
+          stop: '',
+          display: 'none',
+          time: moment().format('LT')
+        },
+
+      ]
       }
     }
     
@@ -72,18 +133,28 @@ class Login extends React.Component {
       localStorage.setItem(
         'login',this.state
         )
-        if (localStorage.getItem("login") === this.props.history.push("/MessagePage")){
+        if (localStorage.getItem("login") === this.props.history.push("/Friend")){
           this.props.history.push("/login")
         }
     }
   };
+
+  componentDidMount() {
+    const { friendList, message } = this.state
+    localStorage.setItem('friend',JSON.stringify(this.state.friendList))
+    localStorage.setItem('oldmessage',JSON.stringify(this.state.message))
+    this.setState({ 
+        friendList,
+        message
+     });
+  }
 
   render() {
     const token = localStorage.getItem('login')
     return (
       <div>
         {
-          token && <Redirect to="/MessagePage"/>
+          token && <Redirect to="/Friend"/>
         }
           <FormInput
           handleChange={this.handleChange}

@@ -6,7 +6,9 @@ class MessagePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      friendUpdated: [],
       message: [],
+      oldMessage: [],
       text: "",
       change: false,
       stop: '',
@@ -16,45 +18,51 @@ class MessagePage extends React.Component {
   }
 
   componentDidMount() {
-    const message = JSON.parse(localStorage.getItem("text")) || []
-    this.setState({ message });
+    const messagetext = JSON.parse(localStorage.getItem("Newmessage")) || []
+    this.setState({ 
+      message: messagetext
+    }, this.myMessage);
   }
 
+  myMessage = () => {
+    const {message} = this.state
+    this.setState({
+      message
+    })
+    localStorage.setItem('Newmessage',JSON.stringify(message))
+    console.log(message);
+    
+  }
   showDelete = () => {
-    this.state.display == "none" ? 
-    this.setState({ display : "block" }) : 
-    this.setState({ display : "none"})
+    const { text, message, stop, change, display  } = this.state
+    display === "none" ? 
+    this.setState({ 
+      message: message,
+      text: text,
+      stop: stop,
+      change: change,
+      time: moment().format('LT'),
+      display : "block" 
+    }) : 
+    this.setState({ 
+      message: message,
+      text: text,
+      stop: stop,
+      change: change,
+      time: moment().format('LT'),
+      display: "none"
+    })
     }
   
   handleChange = e => {
     this.setState({
       text: e.target.value
     });
-    console.log(e.target.value);
   };
 
-  // changeMessage = (index) => {
-  //   const olditems = this.state.message.slice()
-  //   const data = olditems.find(object => object.index === index)
-  //   const indexs = olditems.findIndex(object => object.index === index)
-  //   const newitem = [
-  //     ...olditems.slice(0, indexs),
-  //     {
-  //       ...data,
-  //       text: 'Your message was deleted',
-  //       change: true
-  //     },
-  //     ...olditems.slice(indexs + 1, olditems.length)
-  //   ]
-  //   console.log(newitem);
-
-  //   this.setState({
-  //     message: newitem
-  //   })
-  // }
 
   handleSubmit = e => {
-    const { text, message, stop, change, display } = this.state;
+    const { text, message, stop, change, display, friendUpdated } = this.state;
     if (text !== ''){
     message.push({
       text: text,
@@ -62,7 +70,21 @@ class MessagePage extends React.Component {
       change: change,
       display: display,
       time: moment().format('LT')
-    });}
+    });
+    const friendStatus = JSON.parse(localStorage.getItem("message"));
+    // friendStatus.map(item => { 
+    //   if(item.id === targetId){
+    //   status: 'Last message at  ' + moment().format('l'),
+    //   return newElement
+    //   }else{
+    //   return item
+    //   }
+    //   })
+    console.log(friendStatus);
+    
+    localStorage.setItem('friend',JSON.stringify(this.state.friendUpdated))
+    
+  }
     
     if (message.length > 18) {
         this.setState({
@@ -73,7 +95,7 @@ class MessagePage extends React.Component {
           display: display,
           time: moment().format('LT')
         });
-        localStorage.setItem('text',JSON.stringify(this.state.message))
+        localStorage.setItem('Newmessage',JSON.stringify(this.state.message))
     }
     else {
       this.setState({
@@ -84,13 +106,17 @@ class MessagePage extends React.Component {
         display: display,
         time: moment().format('LT')
       });
-      localStorage.setItem("text", JSON.stringify(this.state.message));
+      localStorage.setItem("Newmessage", JSON.stringify(this.state.message));
       console.log(this.state.message);
     }
   };
-  deleteMessage = e => {
-    
-  }
+  // deleteMessage = e => {
+  //   const {message} = this.state
+  //     message.map(item => (item.id 
+  //     )
+  //     console.log(item);
+      
+  // }
 
   backToFriend = e => {
     this.props.history.push("/Friend");
@@ -106,6 +132,7 @@ class MessagePage extends React.Component {
         <Message
           text={this.state.text}
           message={this.state.message}
+          display={this.state.display}
           showDelete={this.showDelete}
           backToFriend={this.backToFriend}
           handleChange={this.handleChange}
