@@ -6,9 +6,12 @@ class MessagePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      mixmessage: [],
       friendUpdated: [],
       message: [],
+      friend: [],
       oldMessage: [],
+      owner_id: '',
       text: "",
       change: false,
       stop: '',
@@ -19,44 +22,52 @@ class MessagePage extends React.Component {
 
   componentDidMount() {
     const messagetext = JSON.parse(localStorage.getItem("Newmessage")) || []
+    const friendStatus = JSON.parse(localStorage.getItem("message"));
+    const update = JSON.parse(localStorage.getItem("oldmessage"));
+    console.log(update);
+    
     this.setState({ 
-      message: messagetext
+      mixmessage: update,
+      message: messagetext,
+      friend: friendStatus
     }, this.myMessage);
   }
 
   myMessage = () => {
-    const {message} = this.state
+    const {message, friend, mixmessage} = this.state
     this.setState({
-      message
+      message,
+      friend,
+      mixmessage
     })
     localStorage.setItem('Newmessage',JSON.stringify(message))
-    console.log(message);
+    console.log(mixmessage);
     
   }
-  showDelete = (item,index) => {
-    const { text, message, stop, change, display  } = this.state
-    console.log(this.state);
-    message.map( (item,index2) => index == index2 ?  
-    this.setState({ 
-      message: message,
-      text: 'Your message was deleted',
-      stop: stop,
-      change: true,
-      time: moment().format('LT'),
-      display : "block" 
-    })
-     : 
-    this.setState({ 
-      message: message,
-      text: text,
-      stop: stop,
-      change: change,
-      time: moment().format('LT'),
-      display: "none"
-    }) 
-    )
-    console.log(this.state)
-    }
+  // showDelete = (item,index) => {
+  //   const { text, message, stop, change, display  } = this.state
+  //   console.log(this.state);
+  //   message.map( (item,index2) => index == index2 ?  
+  //   this.setState({ 
+  //     message: message,
+  //     text: 'Your message was deleted',
+  //     stop: stop,
+  //     change: true,
+  //     time: moment().format('LT'),
+  //     display : "block" 
+  //   })
+  //    : 
+  //   this.setState({ 
+  //     message: message,
+  //     text: text,
+  //     stop: stop,
+  //     change: change,
+  //     time: moment().format('LT'),
+  //     display: "none"
+  //   }) 
+  //   )
+  //   console.log(this.state)
+  //   }
   
   handleChange = e => {
     this.setState({
@@ -66,9 +77,10 @@ class MessagePage extends React.Component {
 
 
   handleSubmit = e => {
-    const { text, message, stop, change, display, friendUpdated } = this.state;
+    const { text, message, stop, change, display, friend, friendUpdated } = this.state;
     if (text !== ''){
     message.push({
+      owner_id: friend.id,
       text: text,
       stop: stop,
       change: change,
@@ -85,8 +97,8 @@ class MessagePage extends React.Component {
     // }})
       
       
-    console.log(friendStatus);
-    // localStorage.setItem('friend',JSON.stringify(this.state.friendUpdated))
+    console.log(friendStatus.id);
+    localStorage.setItem('oldmessage',JSON.stringify(this.state.friendUpdated))
   }
     if (message.length > 18) {
         this.setState({
@@ -98,6 +110,7 @@ class MessagePage extends React.Component {
           time: moment().format('LT')
         });
         localStorage.setItem('Newmessage',JSON.stringify(this.state.message))
+        localStorage.setItem('oldmessage',JSON.stringify(this.state.message))
     }
     else {
       this.setState({
@@ -109,6 +122,11 @@ class MessagePage extends React.Component {
         time: moment().format('LT')
       });
       localStorage.setItem("Newmessage", JSON.stringify(this.state.message));
+      localStorage.setItem('oldmessage',JSON.stringify
+      (this.state.mixmessage.concat
+        (message 
+          [message.length-1]
+        )))
       console.log(this.state.message);
     }
   };
