@@ -3,13 +3,12 @@ import { TiDeleteOutline } from "react-icons/ti";
 
 import { YourMessage, Navber, Footer, Chat, Icon, ReplyStopMessage, Time, TimeReply } from "./message.style";
 const Message = (props) => {
-        const { text, message, handleChange, handleSubmit, backToFriend, showDelete, display } = props;        
+        const { text, message, handleChange, handleSubmit, backToFriend, showDelete, hideDelete, deleteMessage } = props;        
         const messagesEndRef = useRef(null)
         const scrollToBottom = () => {
             return messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
           }
           useEffect(scrollToBottom);
-          
     return (
         <div>
             <Navber>
@@ -19,10 +18,15 @@ const Message = (props) => {
             {message.length !== 0 && message.map((item,index) => (
             <div >
             <div onClick={()=> showDelete(item,index)}>
-            <Icon style = {{display : display }}>
+            <Icon 
+            style = {{display : item.display }}
+            onClick={()=>deleteMessage(item,index)}
+            >
             <TiDeleteOutline />
             </Icon>
-            <YourMessage  >
+            <YourMessage  
+            change = {item.change}
+            >
               {item.text}
             </YourMessage>
             </div>
@@ -46,6 +50,7 @@ const Message = (props) => {
               value={text}
               onChange={handleChange}
               placeholder="Type your message here ..."
+              onClick={hideDelete}
               />
               <button onClick={handleSubmit} >Send</button>
           </Footer>

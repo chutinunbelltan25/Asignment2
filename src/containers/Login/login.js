@@ -42,7 +42,7 @@ class Login extends React.Component {
           change: false,
           stop: '',
           display: 'none',
-          time: '12.00 PM'
+          time: '12.00 PM',
         },
         {
           id: "m0n1-o2p3-q4r5",
@@ -51,7 +51,8 @@ class Login extends React.Component {
           change: false,
           stop: '',
           display: 'none',
-          time: moment().format('LT')
+          time: moment().format('LT'),
+          day: '12/2/2020'
         },
         {
           id: "m0n1-o2p3-q4r5",
@@ -68,7 +69,8 @@ class Login extends React.Component {
           change: false,
           stop: '',
           display: 'none',
-          time: moment().format('LT')
+          time: moment().format('LT'),
+          day: '12/2/2020'
         },
 
       ]

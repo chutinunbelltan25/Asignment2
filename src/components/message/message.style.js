@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const YourMessage = styled.div `
     display: grid;
     justify-items: center;
-    background-color: #ff9999;
+    background-color: ${props => props.change ? 'silver' : '#ff9999'};
     border-radius: 5px;
     padding: 30px;
     position: relative;

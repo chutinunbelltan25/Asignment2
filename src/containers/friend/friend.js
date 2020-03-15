@@ -1,7 +1,6 @@
 import React from 'react'
 import { FriendNew } from '../../components'
 import { Redirect } from 'react-router-dom'
-import moment from 'moment'
 
 class Friend extends React.Component {
     constructor(props){
@@ -15,24 +14,14 @@ class Friend extends React.Component {
         }
     }
 
-    newFriend = () => {
-      const {friendList, dataBase, oldMessage} = this.state
-      this.setState({
-        friendList,
-        dataBase,
-        oldMessage
-      })
-      
-    }
-
-    componentDidMount() {
-        const myFriend = JSON.parse(localStorage.getItem("friend"));
-        const oldMessageTo = JSON.parse(localStorage.getItem("oldmessage"));
+    async componentDidMount() {
+        const myFriend = await JSON.parse(localStorage.getItem("friend"));
+        const oldMessageTo = await JSON.parse(localStorage.getItem("oldmessage"));
         this.setState({ 
           dataBase: myFriend,
           friendList: myFriend,
           oldMessage: oldMessageTo
-         }, this.newFriend);
+         });
       }
 
     showSearch = () => {
@@ -48,44 +37,35 @@ class Friend extends React.Component {
        }, this.searchFriend)
      }
 
-    searchFriend = () => {
-      const { name } = this.state
-      const search = this.state.dataBase.filter(item => {
-        return item.name === name
-      })
+    searchFriend = async () => {
+      let { name } = await this.state
+      name = name.toLowerCase()
+      const search = this.state.dataBase.filter(item => ( item.name.toLowerCase().includes(name) ? item : false ))
       this.setState({
         friendList: search
       })
      }
 
-    messageto = id => {
+    findMessage = id => {
       const messageFriend = this.state.friendList.find(item => item.id === id )
       const checkId =this.state.oldMessage.filter(item => item.owner_id === id )
       localStorage.setItem("message", JSON.stringify(messageFriend))
       localStorage.setItem("Newmessage", JSON.stringify(checkId))
       this.props.history.push("/MessagePage");
-      console.log(messageFriend);
-      console.log(checkId);
     }
 
     backToMessage = e => {
       this.props.history.push("/MessagePage");
     };
 
-    deleteFriend = (id)=> {
-        const filterDelete = this.state.friendList.filter(item => item.id !== id)
+    deleteFriend = async (id) => {
+        const filterDelete = await this.state.friendList.filter(item => item.id !== id)
     this.setState({
         friendList: filterDelete,
-    }, this.setDeletefriend)
-    } 
-
-    setDeletefriend = () => {
-      const {friendList} = this.state
-      this.setState({
-        friendList,
+        dataBase: filterDelete
     })
-      localStorage.setItem("friend", JSON.stringify(friendList))
-    }
+    localStorage.setItem("friend", JSON.stringify(this.state.friendList))
+    } 
 
     logout = e => {
         localStorage.clear();
@@ -97,9 +77,10 @@ class Friend extends React.Component {
         return(
             <div>
                 {
-                 !token && <Redirect to="/login"/> 
+                 !token && <Redirect to="/login"/>
                 }
                 <FriendNew
+                oldMessage={this.state.oldMessage}
                 friendFind={this.state.friendFind}
                 searchFriend={this.searchFriend}
                 name={this.state.name}
@@ -109,7 +90,7 @@ class Friend extends React.Component {
                 showSearch={this.showSearch}
                 backToMessage={this.backToMessage}
                 logout={this.logout}
-                messageto={this.messageto}
+                findMessage={this.findMessage}
                 friendList={this.state.friendList}
                 />
             </div>
