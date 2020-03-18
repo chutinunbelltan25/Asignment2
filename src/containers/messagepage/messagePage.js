@@ -6,7 +6,7 @@ class MessagePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mixmessage: [],
+      mixMessage: [],
       friendUpdated: [],
       message: [],
       friend: [],
@@ -16,30 +16,30 @@ class MessagePage extends React.Component {
       change: false,
       stop: '',
       display: 'none',
-      time: moment().format('LT'),
-      day: ''
+      time: '',
+      sec: '',
+      day: '',
+      token:localStorage.getItem('login'),
     };
   }
 
   async componentDidMount() {
-    const messagetext = await JSON.parse(localStorage.getItem("Newmessage")) || []
+    const messageText = await JSON.parse(localStorage.getItem("newMessage")) 
     const friendStatus = await JSON.parse(localStorage.getItem("message"));
-    const update = await JSON.parse(localStorage.getItem("oldmessage"));
+    const update = await JSON.parse(localStorage.getItem("oldMessage"));
     
     this.setState({ 
-      mixmessage: update,
-      message: messagetext,
+      mixMessage: update,
+      message: messageText,
       friend: friendStatus
     });
-    localStorage.setItem('Newmessage',JSON.stringify(this.state.message))
+    localStorage.getItem('newMessage',JSON.stringify(this.state.message))
   }
 
-
-  hideDelete = () => {
+  hideDelete = () => { 
     this.state.message.map(item => 
       item.display === 'block' ? item.display = 'none' : 'none')
     this.forceUpdate()
-
   }
 
   showDelete = (item,index) => {
@@ -60,8 +60,11 @@ class MessagePage extends React.Component {
         return item
       }
       })
-      const {message, mixmessage} = this.state
-      localStorage.setItem('oldmessage',JSON.stringify(mixmessage.concat
+      const {message, mixMessage} = this.state
+      this.setState({
+        mixMessage: message
+      })
+      localStorage.setItem('oldMessage',JSON.stringify(mixMessage.concat
         (message 
           [message.length-1]
         )))
@@ -74,8 +77,17 @@ class MessagePage extends React.Component {
   };
 
 
-  handleSubmit = e => {
-    const { text, message, stop, change, display, friend, day } = this.state;
+  handleSubmit = async e => {
+    const { 
+      text, 
+      message, 
+      stop, 
+      change, 
+      display, 
+      friend, 
+      day 
+    } = this.state;
+
     if (text !== ''){
     message.push({
       owner_id: friend.id,
@@ -84,9 +96,11 @@ class MessagePage extends React.Component {
       change: change,
       display: display,
       time: moment().format('LT'),
-      day: moment().format('l')
+      day: moment().format('l'),
+      sec: moment().format(),
     });
   }
+
     if (message.length > 18) {
         this.setState({
           text: "",
@@ -94,14 +108,15 @@ class MessagePage extends React.Component {
           change: change,
           display: display,
           time: moment().format('LT'),
-          day: day
+          day: day,
+          sec: moment().format(),
         });
-        const {message, mixmessage} = this.state
-        localStorage.setItem('Newmessage',JSON.stringify(message))
-        localStorage.setItem('oldmessage',JSON.stringify(mixmessage.concat
+        const {message, mixMessage} = this.state
+        const messageForOld = localStorage.setItem('newMessage',JSON.stringify(mixMessage.concat
           (message 
             [message.length-1]
           )))
+        localStorage.setItem('oldMessage',JSON.stringify(messageForOld))
     }
     else {
       this.setState({
@@ -111,28 +126,40 @@ class MessagePage extends React.Component {
         change: change,
         display: display,
         time: moment().format('LT'),
-        day: day
+        day: day,
+        sec: moment().format(),
       });
-      localStorage.setItem("Newmessage", JSON.stringify(this.state.message));
-      localStorage.setItem('oldmessage',JSON.stringify
-      (this.state.mixmessage.concat
+
+      const messageForOld = localStorage.setItem("newMessage", JSON.stringify(this.state.mixMessage.concat
         (message 
           [message.length-1]
-        )))
+        )));
+      localStorage.setItem('oldMessage',JSON.stringify(messageForOld))
     }
-  };
+      let messageSort = message.filter( data => data.owner_id === friend.id ? data : undefined)
+      let date = messageSort[messageSort.length - 1].sec
+      const friendSort = await JSON.parse(localStorage.getItem("friend"));
+      friendSort.map(item => item.id === friend.id ? item.date = date : item )
+      friendSort.sort((before,after) => {
+        return new Date(after.date) - new Date(before.date)
+      })
+      this.setState({
+        friendUpdated: friendSort
+      })
+      localStorage.setItem("friend", JSON.stringify(friendSort))
+  }
   
   backToFriend = e => {
     this.props.history.push("/Friend");
   };
   
   render() {
-    const token = localStorage.getItem('login')
+    const { token } = this.state
     return(
       <div>
         {
          !token && <Redirect to="/login"/> 
-  }
+        }
         <Message
           hideDelete={this.hideDelete}
           text={this.state.text}
@@ -144,7 +171,6 @@ class MessagePage extends React.Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
           replyMessage={this.replyMessage}
-          scrollWin={this.scrollWin}
         />
       </div>
     )

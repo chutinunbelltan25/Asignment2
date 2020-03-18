@@ -6,8 +6,8 @@ const FormInput = (props) => {
                  username,
                  password,
                  alertUsername, 
-                 ErrorValidationUsername, 
-                 ErrorValidationPassword}
+                 errorValidateUsername, 
+                 errorValidatePassword}
                  = props;        
     return (
         <Style  
@@ -27,7 +27,7 @@ const FormInput = (props) => {
               required
               />
             <Validation>
-            {ErrorValidationUsername( "Username is incorrect", "")}
+            {errorValidateUsername( "Username is incorrect", "")}
             </Validation>
             <div className='password'>
               <input 
@@ -40,7 +40,7 @@ const FormInput = (props) => {
                />
             </div>
             <Validation>
-              {ErrorValidationPassword("Password is incorrect", "")}
+              {errorValidatePassword("Password is incorrect", "")}
             </Validation>
             <div className='submit'>
               <button onClick={handleSubmit}>Login</button>

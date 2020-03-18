@@ -18,12 +18,14 @@ class Login extends React.Component {
           name: "Alice",
           photo: 'https://i.pinimg.com/originals/26/94/92/2694922c532a25e46e7125c62caf9c1f.jpg',
           status: 'Last message at  ' + moment().format('l'),
+          date: '12/2/2020 07:00:00'
         },
         {
           id: "a4b5-c6d7-e8f9",
           name: "Bob",
           photo: 'https://i.pinimg.com/originals/9a/a8/ca/9aa8ca30c2b4b225702a5c580374dd98.jpg',
           status: 'Last message at  ' + moment().format('l'),
+          date: '12/2/2020 07:00:00'
           
         },
         {
@@ -31,7 +33,7 @@ class Login extends React.Component {
           name: "Carter",
           photo: 'https://i.pinimg.com/originals/17/6c/57/176c57ed3f305ec6ffd91b5b199b9927.png',
           status: "Your friends is accepted",
-          message: [],
+          date: '12/2/2020 07:00:00'
         }
       ],
       message: [
@@ -73,28 +75,38 @@ class Login extends React.Component {
           day: '12/2/2020'
         },
 
-      ]
+      ],
+      token:localStorage.getItem('login'),
       }
+      
+    }
+
+    componentDidMount() {
+      const { friendList, message } = this.state
+      localStorage.getItem('friend',JSON.stringify(this.state.friendList))
+      localStorage.getItem('oldMessage',JSON.stringify(this.state.message))
+      this.setState({ 
+          friendList,
+          message
+       });
     }
     
     validateForm = () => {
       let { username, password, alertUsername, alertPassword } = this.state;
       let notInvalid = true;
-  
       if (username !== "username") {
         alertUsername = true;
         notInvalid = false;
       } else {
         alertUsername = false;
       }
-  
+      
       if (password !== "123456789") {
         alertPassword = true;
         notInvalid = false;
       } else {
         alertPassword = false;
       }
-  
       this.setState({ 
         alertUsername, 
         alertPassword,
@@ -108,30 +120,39 @@ class Login extends React.Component {
       this.setState({ [e.target.name]: e.target.value });
     };
 
-    ErrorValidationUsername = ( validatePass, notvalid) => {
+    errorValidateUsername = ( validatePass, notValid) => {
     const { alertUsername } = this.state
-    return alertUsername === false ? (
-      <div>{notvalid}</div>
-      ) : <div>{validatePass}</div>;
+    if (alertUsername === false){
+      return <div>{notValid}</div>
+    } else {
+      return <div>{validatePass}</div>
+    }
     }
 
-    ErrorValidationPassword = ( validatePass, notvalid) => {
+    errorValidatePassword = ( validatePass, notValid) => {
     const { alertPassword } = this.state
-    return alertPassword === false ? (
-      <div>{notvalid}</div>
-      ) : <div>{validatePass}</div>;
+    if (alertPassword === false){
+      return <div>{notValid}</div>
+    } else {
+      return <div>{validatePass}</div>
     }
+    }
+    
     handleSubmit = e => {
       e.preventDefault();
     if (this.validateForm()) {
-      const {username,password,alertUsername,alertPassword} =this.state
+      const {
+        username,
+        password,
+        alertUsername,
+        alertPassword
+      } =this.state
       this.setState({
         username,
         password,
         alertUsername,
         alertPassword
       })
-
       localStorage.setItem(
         'login',this.state
         )
@@ -141,18 +162,8 @@ class Login extends React.Component {
     }
   };
 
-  componentDidMount() {
-    const { friendList, message } = this.state
-    localStorage.setItem('friend',JSON.stringify(this.state.friendList))
-    localStorage.setItem('oldmessage',JSON.stringify(this.state.message))
-    this.setState({ 
-        friendList,
-        message
-     });
-  }
-
   render() {
-    const token = localStorage.getItem('login')
+    const { token } = this.state
     return (
       <div>
         {
@@ -164,8 +175,8 @@ class Login extends React.Component {
           username={this.state.username}
           password={this.state.password}
           alertUsername={this.state.alertUsername}
-          ErrorValidationUsername={this.ErrorValidationUsername}
-          ErrorValidationPassword={this.ErrorValidationPassword}
+          errorValidateUsername={this.errorValidateUsername}
+          errorValidatePassword={this.errorValidatePassword}
           />    
         
       </div>

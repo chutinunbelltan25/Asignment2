@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Frienddiv = styled.div `
 
 `
-export const Friendlist = styled.tr `
+export const Friendlist = styled.div `
     display: grid;
     justify-items: start;
     grid-template-columns: 20% 60% 20%;
@@ -17,6 +17,7 @@ export const Friendlist = styled.tr `
         display:block;
     }
     button {
+        cursor: pointer;
         width: 100px;
         height: 40px;
         margin: 40px 10px;
@@ -24,9 +25,10 @@ export const Friendlist = styled.tr `
         border-radius: 5px;
     }
 `
-export const Detail = styled.td `
+export const Detail = styled.div `
 
     img {
+        cursor: pointer;
         width: 100px;
         height: 100px;
         object-fit: cover;
@@ -90,6 +92,7 @@ export const Navber = styled.div `
 
 `
 export const ButtonSearch = styled.button `
+    cursor: pointer;
     background-color: #2a9df4;
     border-radius: 5px;
     width: 120px;
@@ -99,6 +102,7 @@ export const ButtonSearch = styled.button `
 `
 
 export const Buttonback = styled.button `
+    cursor: pointer;
     background-color: silver;
     border-radius: 5px;
     width: 80px;
@@ -107,7 +111,7 @@ export const Buttonback = styled.button `
     margin: 9px;
 `
 
-export const Myfriend = styled.table `
+export const Myfriend = styled.div `
     height: 90%;
     width: 100%;
     position: absolute;
@@ -127,6 +131,7 @@ export const Footer = styled.div `
     background-color: #93E2D5;
 
     button {
+        cursor: pointer;
         margin-top: 5px;
         margin-left: 10px;
         margin-bottom: 5px;

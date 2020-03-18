@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const YourMessage = styled.div `
     display: grid;
     justify-items: center;
+    cursor: pointer;
     background-color: ${props => props.change ? 'silver' : '#ff9999'};
     border-radius: 5px;
     padding: 30px;
@@ -19,6 +20,7 @@ export const YourMessage = styled.div `
 `
 
 export const Icon = styled.div `
+    cursor: pointer;
     background-color: silver;
     border-radius: 50px;
     width: 15px;

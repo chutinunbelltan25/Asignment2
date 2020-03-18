@@ -8,30 +8,36 @@ class Friend extends React.Component {
         this.state = {
             dataBase: [],
             friendList: [],
+            friend: '',
+            date: '',
             oldMessage: [],
             display: 'none',
             name: '',
+            token:localStorage.getItem('login'),
         }
     }
 
     async componentDidMount() {
         const myFriend = await JSON.parse(localStorage.getItem("friend"));
-        const oldMessageTo = await JSON.parse(localStorage.getItem("oldmessage"));
+        const oldMessageTo = await JSON.parse(localStorage.getItem("oldMessage"));
         this.setState({ 
           dataBase: myFriend,
           friendList: myFriend,
           oldMessage: oldMessageTo
          });
+
       }
 
     showSearch = () => {
         const { display } = this.state
-        display === "none" ? 
-        this.setState({ display : "block" }) : 
-        this.setState({ display : "none"})
+        if (display === "none" ){
+          this.setState({ display : "block" })
+        } else {
+          this.setState({ display : "none"})
+        }
      }  
 
-    inputsearch = e => {
+    inputSearch = e => {
        this.setState({
         [e.target.name]: e.target.value 
        }, this.searchFriend)
@@ -46,11 +52,11 @@ class Friend extends React.Component {
       })
      }
 
-    findMessage = id => {
-      const messageFriend = this.state.friendList.find(item => item.id === id )
-      const checkId =this.state.oldMessage.filter(item => item.owner_id === id )
+    findMessage = async id => {
+      const messageFriend = await this.state.friendList.find(item => item.id === id )
+      const checkId = await this.state.oldMessage.filter(item => item.owner_id === id )
       localStorage.setItem("message", JSON.stringify(messageFriend))
-      localStorage.setItem("Newmessage", JSON.stringify(checkId))
+      localStorage.setItem("newMessage", JSON.stringify(checkId))
       this.props.history.push("/MessagePage");
     }
 
@@ -68,12 +74,12 @@ class Friend extends React.Component {
     } 
 
     logout = e => {
-        localStorage.clear();
+        localStorage.removeItem("login")
         this.props.history.push("/login");
       };
 
     render() {
-        const token = localStorage.getItem('login')
+        const {token} = this.state
         return(
             <div>
                 {
@@ -84,7 +90,7 @@ class Friend extends React.Component {
                 friendFind={this.state.friendFind}
                 searchFriend={this.searchFriend}
                 name={this.state.name}
-                inputsearch={this.inputsearch}
+                inputSearch={this.inputSearch}
                 deleteFriend={this.deleteFriend}
                 display={this.state.display}
                 showSearch={this.showSearch}

@@ -51,6 +51,7 @@ const Message = (props) => {
               onChange={handleChange}
               placeholder="Type your message here ..."
               onClick={hideDelete}
+
               />
               <button onClick={handleSubmit} >Send</button>
           </Footer>

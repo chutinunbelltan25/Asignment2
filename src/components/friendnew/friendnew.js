@@ -11,17 +11,20 @@ const FriendNew = (props) => {
         friendList, 
         findMessage, 
         deleteFriend, 
-        inputsearch, 
+        inputSearch, 
         name 
         } = props;
+        
+        
     let showUpdate = (item) =>{
        let oldMessageArray = oldMessage.filter( data => data.owner_id === item.id ? data : undefined)
-        if (oldMessageArray.length < 1 ){
+       if (oldMessageArray.length < 1 ){
             return "Your friends is accepted"
         } else {
             return 'Last message at  ' + oldMessageArray[oldMessageArray.length-1].day
         }
     }
+    
     return (
         <div>
             <Navber>
@@ -33,7 +36,7 @@ const FriendNew = (props) => {
                 type='text'
                 name='name'
                 value={name}
-                onChange={inputsearch}
+                onChange={inputSearch}
                 />
                 </div>
                 <div>
